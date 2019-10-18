@@ -1,0 +1,9 @@
+1. sudo git clone --depth=1 https://github.com/RetroPie/RetroPie-Setup.git
+2. cd RetroPie-Setup
+3. sudo nano retropie_packages.sh
+4. Add this line  __platform=rpi3
+5. sudo ./retropie_setup.sh
+
+Auto Start RetroPie
+1. sudo nano /etc/xdg/lxsession/LXDE-pi/autostart
+2. Add this - lxterminal -e /usr/bin/emulationstation

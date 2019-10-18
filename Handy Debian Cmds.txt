@@ -1,0 +1,24 @@
+----Reboot---
+sudo reboot
+
+----Configure Static IP---
+sudo nano /etc/dhcpcd.conf		//reboot to take effect
+
+interface eth0
+static ip_address=192.168.0.10/24
+static routers=192.168.0.1
+static domain_name_servers=192.168.0.1
+
+interface wlan0
+static ip_address=192.168.0.200/24
+static routers=192.168.0.1
+static domain_name_servers=192.168.0.1
+
+----Install pi-hole---
+curl -sSL https://install.pi-hole.net | bash
+
+----Remove Folder Recursively---
+sudo rm -r $FolderName
+
+----Check disk is HDD or SSD---
+cat /sys/block/sda/queue/rotational		//returns 1 for HDD, 0 for SSD

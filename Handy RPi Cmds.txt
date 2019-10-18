@@ -1,0 +1,5 @@
+----Configure RaspbianPi---
+sudo raspi-config
+
+----Update Locale to US---
+sudo update-locale LC_ALL=en_US.UTF-8	//reboot to take effect
