@@ -1,6 +1,10 @@
 ----Reboot---
 sudo reboot
 
+----get available updates from repository and apply the updates---
+sudo apt-get update		//update repositories
+sudo apt-get upgrade	//apply updates
+
 ----Configure Static IP---
 sudo nano /etc/dhcpcd.conf		//reboot to take effect
 
@@ -22,3 +26,22 @@ sudo rm -r $FolderName
 
 ----Check disk is HDD or SSD---
 cat /sys/block/sda/queue/rotational		//returns 1 for HDD, 0 for SSD
+
+----change ownership of a partition to yourself---
+sudo chown -R -v $USER: /media/$USERNAME/"$partitionname"
+
+----Give full read/write/execute access to yourself on a partition---
+sudo chmod 755 /media/$USERNAME/"$partitionname"			/-r for recursive, -v for verbose, 775 for yourself
+
+----display crontab contents---
+crontab -l
+
+----edit cron jobs---
+crontab -e
+
+----remove all cron jobs---
+$ crontab -r
+
+----show just cron jobs in log file---
+grep CRON /var/log/syslog		//default location of cron jobs log and many other -> var/log/syslog
+
