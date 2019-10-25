@@ -1,0 +1,2 @@
+#autostart biglybt at boot
+@reboot /opt/biglybt/biglybt %U > cron.log
