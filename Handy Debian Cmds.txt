@@ -45,3 +45,6 @@ $ crontab -r
 ----show just cron jobs in log file---
 grep CRON /var/log/syslog		//default location of cron jobs log and many other -> var/log/syslog
 
+
+----Update OS---
+sudo sh -c "apt update && apt dist-upgrade && apt autoremove"
