@@ -4,6 +4,7 @@ sudo reboot
 ----get available updates from repository and apply the updates---
 sudo apt-get update		//update repositories
 sudo apt-get upgrade	//apply updates
+sudo apt-get dist-upgrade
 
 ----Configure Static IP---
 sudo nano /etc/dhcpcd.conf		//reboot to take effect
