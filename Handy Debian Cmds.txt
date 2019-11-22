@@ -46,6 +46,24 @@ $ crontab -r
 ----show just cron jobs in log file---
 grep CRON /var/log/syslog		//default location of cron jobs log and many other -> var/log/syslog
 
-
 ----Update OS---
 sudo sh -c "apt update && apt dist-upgrade && apt autoremove"
+
+----List partitioans and file system infromation---
+fsck -N /dev/sda3
+lsblk -f
+blkid /dev/sda3
+sudo file -sL /dev/sda3
+
+----Check file system for errors---		// fs check
+sudo fsck /dev/sda1
+
+----Mount disk/partition/folder---
+mount /dev/sdb /data
+
+----Unmount disk/partition/folder---
+umount /dev/sdb
+umount -f /dev/sdb
+
+----Get SMART info of a disk---
+smartctl -a -d sat /dev/sda
