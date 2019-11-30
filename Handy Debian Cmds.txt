@@ -50,10 +50,11 @@ grep CRON /var/log/syslog		//default location of cron jobs log and many other ->
 sudo sh -c "apt update && apt dist-upgrade && apt autoremove"
 
 ----List partitioans and file system infromation---
-fsck -N /dev/sda3
+fsck -N /dev/sd*
+ls -l /dev/sd*
 lsblk -f
-blkid /dev/sda3
-sudo file -sL /dev/sda3
+blkid /dev/sd*
+sudo file -sL /dev/sd*
 
 ----Check file system for errors---		// fs check
 sudo fsck /dev/sda1
@@ -67,3 +68,6 @@ umount -f /dev/sdb
 
 ----Get SMART info of a disk---
 smartctl -a -d sat /dev/sda
+
+----Automount of network share folder in debian---		smb:\\nodename\sharename is translated to this natively
+/run/user/1000/gvfs
