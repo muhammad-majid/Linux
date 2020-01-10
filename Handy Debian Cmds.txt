@@ -69,5 +69,5 @@ umount -f /dev/sdb
 ----Get SMART info of a disk---
 smartctl -a -d sat /dev/sda
 
-----Automount of network share folder in debian---		smb:\\nodename\sharename is translated to this natively
+----Automount path of network share folder in debian---		smb:\\nodename\sharename is translated to this natively
 /run/user/1000/gvfs
