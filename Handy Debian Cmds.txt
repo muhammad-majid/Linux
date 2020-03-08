@@ -71,3 +71,10 @@ smartctl -a -d sat /dev/sda
 
 ----Automount path of network share folder in debian---		smb:\\nodename\sharename is translated to this natively
 /run/user/1000/gvfs
+
+----Copy file---
+sudo cp /sourcepath/fileA.txt destinationpath/fileB.txt			//copy fileA to another location and saveas fileB.
+sudo cp /sourcepath/fileA.txt destinationpath					// copy fileA to another location as same name.
+
+----clear contents of a file---
+:> /path/filename.ext			//the content will go blank and size goes 0.
