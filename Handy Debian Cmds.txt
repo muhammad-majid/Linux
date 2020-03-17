@@ -1,6 +1,9 @@
 ----Reboot---
 sudo reboot
 
+----Check last bootup, runtime---
+uptime
+
 ----get available updates from repository and apply the updates---
 sudo apt-get update		//update repositories
 sudo apt-get upgrade	//apply updates
