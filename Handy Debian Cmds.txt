@@ -4,10 +4,24 @@ sudo reboot
 ----Check last bootup, runtime---
 uptime
 
+----add APT repository---
+sudo add-apt-repository 'deb $repositorypath'
+Example:
+sudo add-apt-repository 'deb https://mkvtoolnix.download/debian/ buster main'
+sudo add-apt-repository 'deb https://mkvtoolnix.download/ubuntu/ eoan main'
+
+
+----remove unnecessary dependencies---
+sudo apt-get autoremove
+
 ----get available updates from repository and apply the updates---
-sudo apt-get update		//update repositories
-sudo apt-get upgrade	//apply updates
-sudo apt-get dist-upgrade
+1. sudo apt-get update		//update repositories
+2. sudo apt-get upgrade	//apply updates
+3. sudo apt-get dist-upgrade
+AIO. sudo apt update && sudo apt -y upgrade && sudo apt -y dist-upgrade && sudo apt -y autoremove && sudo apt autoclean 		// all 3 in one
+
+----install a debian .deb package---
+sudo apt install /path/to/package/name.deb
 
 ----Configure Static IP---
 sudo nano /etc/dhcpcd.conf		//reboot to take effect
@@ -25,17 +39,91 @@ static domain_name_servers=192.168.0.1
 ----Install pi-hole---
 curl -sSL https://install.pi-hole.net | bash
 
+----Update pi-hole---
+sudo apt-get update
+pihole -up
+
+----Update OMV---
+sudo apt update && sudo apt -y upgrade && sudo apt -y dist-upgrade
+
 ----Remove Folder Recursively---
 sudo rm -r $FolderName
 
 ----Check disk is HDD or SSD---
 cat /sys/block/sda/queue/rotational		//returns 1 for HDD, 0 for SSD
 
-----change ownership of a partition to yourself---
-sudo chown -R -v $USER: /media/$USERNAME/"$partitionname"
+----View Permission on a file, folder or partition----
+ls -l /$fullDirPath_or_fileName.ext
 
-----Give full read/write/execute access to yourself on a partition---
-sudo chmod 755 /media/$USERNAME/"$partitionname"			/-r for recursive, -v for verbose, 775 for yourself
+result is in format 10 bits '1234567890' each bit representing a flag
+1 represents file (-) or directory (d)
+2 represents owner's read (r) or none (-) flag.
+3 represents owner's write (w) or none (-) flag.
+4 represents owner's execute (x) or none (-) flag.
+5 represents group's read (r) or none (-) flag.
+6 represents group's write (w) or none (-) flag.
+7 represents group's execute (x) or none (-) flag.
+8 represents other's read (r) or none (-) flag.
+9 represents other's write (w) or none (-) flag.
+0 represents other's execute (x) or none (-) flag.
+
+Example:
+-rwxrwxrwx 1 svc-hadoop-platform-dev cperry      33 May 25 15:39 sample.txt
+drw-r--r-- 1 svc-hadoop-platform-dev mjones     461 Aug  4 13:06 sample_files
+-rw-rw-r-- 1 svc-hadoop-platform-dev mjones      55 Aug  4 13:06 subs.txt
+-rwxrwx--- 1 svc-hadoop-platform-dev terryb      56 Aug 16 17:00 otherfile.txt
+
+
+
+----Managing owernership of a file, folder or partition----
+sudo chown -R [$USERNAME]:[$GROUPNAME] /$fullDirPath_or_fileName.ext		//-R for recursive, -v for verbose
+sudo chown -R -v :readers /READERS					//grant readers group owenership of /READERS folder (group is after colon).
+sudo chown -R  -v majid: /READERS/myStory.docx		//grant user 'majid'  owenership of /READERS/mystory document (user is before colon).
+
+----Managing permission on a file, folder or partition----
+sudo chmod [ugoa][+-=][rwxXst] -R -v /$fullDirPath_or_fileName.ext //-R for recursive, -v for verbose
+
+u	User access
+g	Group access
+o	Other system user's access
+a	Equivilent to "ugo"
++	Add access
+-	Remove access
+=	Access explicitly assigned
+r	Permission to read a file
+	Permission to read a directory (also requires "x")
+w	Permission to delete or modify a file
+	Permission to delete or modify files in a directory
+x	Permission to execute a file/script
+	Permission to read a directory (also requires "r")
+s	Set user or group ID on execution.
+u	Permissions granted to the user who owns the file
+t	Set "sticky bit. Execute file/script as user root for regular user.
+
+Examples:
+chmod g+r file-name 			//Grant read access (r) to a file to all members of your group (g):
+chmod g+rx directory-name		//Grant read access to a directory to all members your group:
+chmod ugo+r file-name			//Grant read permissions to everyone on the system to a file which you own so that everyone may read it: (u)ser, (g)roup and (o)ther.
+chmod ugo+rx directory-name		//Grant read permissions on a directory to everyone on the system:
+chmod ugo+rw file-name			//Grant modify or delete permissions to a file which you own for everyone in the group:
+								Note: In order for modify and delete permissions to be useful, one must be able to modify the directory in which the file is located: chmod ugo+rwx
+
+chmod go-r file-name			//Deny read access to a file by everyone except yourself:
+
+Octal codes can also be used giving each permission (r,w or x) a code value.
+Read access, r = 4
+Write access, w = 2
+Execute access, x = 1
+Read and Execute, r+x = 4+1 = 5
+Read and Write, r+w	= 4+2 = 6
+Read, Write and Execute, r+w+x = 4+2+1 = 7
+Use of octal assignment does not add or remove permission, but assigns the permission explicitly.
+
+Examples:
+
+sudo chmod 640 filename				//Assign yourself full access to read and modify the file, allow members of the group to read it and do not allow any others access:
+sudo chmod 660 file-name				//Allow everyone in your group to be able to modify the file:
+sudo chmod 740 filename				//Assign execute status to a script with the same access as the previous example. (Without it, a script is like any other text file)
 
 ----display crontab contents---
 crontab -l
@@ -81,3 +169,10 @@ sudo cp /sourcepath/fileA.txt destinationpath					// copy fileA to another locat
 
 ----clear contents of a file---
 :> /path/filename.ext			//the content will go blank and size goes 0.
+
+----Configure Veeam backups---
+sudo veeamconfig ui
+
+----Get Temperature---
+vcgencmd measure_temp
+
