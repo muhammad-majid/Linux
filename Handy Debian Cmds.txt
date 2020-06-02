@@ -4,12 +4,17 @@ sudo reboot
 ----Check last bootup, runtime---
 uptime
 
+----Get SystemInfo---
+sudo lshw -short					//summary of hardware info
+sudo lshw							//full hardware info
+sudo lshw -html > lshw.html			//full hardware info exported to html file
+sudo lscpu							//cpu info
+
 ----add APT repository---
 sudo add-apt-repository 'deb $repositorypath'
 Example:
 sudo add-apt-repository 'deb https://mkvtoolnix.download/debian/ buster main'
 sudo add-apt-repository 'deb https://mkvtoolnix.download/ubuntu/ eoan main'
-
 
 ----remove unnecessary dependencies---
 sudo apt-get autoremove
@@ -40,15 +45,19 @@ static ip_address=192.168.0.200/24
 static routers=192.168.0.1
 static domain_name_servers=192.168.0.1
 
-----Install pi-hole---
-curl -sSL https://install.pi-hole.net | bash
+----Install pihole and other commands---
+curl -sSL https://install.pi-hole.net | bash		//intall pihole
+pihole -up											//update pihole
+pihole status										//status of pihole system
+pihole restartdns									//restart dns subsystem
+pihole disable										//disable pihole
+pihole enable										//enable pihole
+pihole reconfigure									//reconfigure or repair pihole
+pihole uninstall									//uninstall pihole
 
-----Update pi-hole---
-sudo apt-get update
-pihole -up
-
-----Update OMV---
-sudo apt update && sudo apt -y upgrade && sudo apt -y dist-upgrade
+----OMV commands---
+sudo apt update && sudo apt -y upgrade && sudo apt -y dist-upgrade		//update OMV
+mc																		//copier within ssh
 
 ----Remove Folder Recursively---
 sudo rm -r $FolderName
@@ -200,9 +209,14 @@ pivpn qrcode										//show QR code for a client
 pivpn clients										//list any connected clients
 pivpn update										//update pivpn scripts
 pivpn uninstall										//uninstall pivpn
-
-----Configure PIVPN settings post install---
-sudo nano /etc/pivpn/setupVars.conf
+sudo nano /etc/pivpn/setupVars.conf					//Configure PIVPN settings post install
 
 ----Copy files from remote linux machine to local---
 In Powershell -> pscp.exe mj@192.168.0.8:/home/mj/configs/* 'C:\Users\Mj\Dropbox\Configurations\WireGuard_Profiles'
+
+----exit SSH without killing running process---
+nohup long-running-process &						//launch the process with no hungup
+exit												//exit the ssh
+tail -f nohup.out									//see outout when you return later
+
+
