@@ -21,9 +21,9 @@ sudo apt-get autoremove
 
 ----get available updates from repository and apply the updates---
 1. sudo apt-get update		//update repositories
-2. sudo apt-get upgrade	//apply updates
+2. sudo apt-get upgrade		//apply updates
 3. sudo apt-get dist-upgrade
-AIO. sudo apt update && sudo apt -y upgrade && sudo apt -y dist-upgrade && sudo apt -y autoremove && sudo apt autoclean 		// all 3 in one
+AIO. sudo apt-get update && sudo apt-get -y upgrade && sudo apt-get -y dist-upgrade && sudo apt -y autoremove && sudo apt autoclean 		// all 3 in one
 4.sudo apt update --fix-missing
 
 ----install a debian .deb package---
@@ -46,7 +46,7 @@ static routers=192.168.0.1
 static domain_name_servers=192.168.0.1
 
 ----Install pihole and other commands---
-curl -sSL https://install.pi-hole.net | bash		//intall pihole
+curl -sSL https://install.pi-hole.net | bash		//install pihole
 pihole -up											//update pihole
 pihole status										//status of pihole system
 pihole restartdns									//restart dns subsystem
@@ -150,9 +150,6 @@ $ crontab -r
 ----show just cron jobs in log file---
 grep CRON /var/log/syslog		//default location of cron jobs log and many other -> var/log/syslog
 
-----Update OS---
-sudo sh -c "apt update && apt dist-upgrade && apt autoremove"
-
 ----List partitioans and file system infromation---
 fsck -N /dev/sd*
 ls -l /dev/sd*
@@ -178,13 +175,25 @@ smartctl -a -d sat /dev/sda
 
 ----Copy file---
 sudo cp /sourcepath/fileA.txt destinationpath/fileB.txt			//copy fileA to another location and saveas fileB.
-sudo cp /sourcepath/fileA.txt destinationpath					// copy fileA to another location as same name.
+sudo cp /sourcepath/fileA.txt destinationpath					//copy fileA to another location as same name.
 
 ----clear contents of a file---
 :> /path/filename.ext			//the content will go blank and size goes 0.
 
+----Install Veeam----
+1. dpkg -i ./veeam-release* && apt-get update						//get veeam-release*.deb file from veeam website
+2. sudo apt-get install veeam
+
 ----Configure Veeam backups---
 sudo veeamconfig ui
+
+----Create Veeam Recovery Media---
+sudo veeamconfig patchiso [--efi] --input <input_path.iso> --output <output_path_custom.iso> [--copy <additional_path>]
+<input_path> — path to the ISO file of the generic Veeam Recovery Media.
+<output_path> — path to the resulting ISO file of the custom Veeam Recovery Media.
+<additional_path> — path to a directory with additional drivers that you want to include in the Veeam Recovery Media.
+--efi — option that defines whether custom Veeam Recovery Media should be able to boot on EFI-based systems. Without this option, custom Veeam Recovery Media will be able to boot on BIOS-based systems only.
+
 
 ----Get Temperature---
 vcgencmd measure_temp
@@ -219,4 +228,9 @@ nohup long-running-process &						//launch the process with no hungup
 exit												//exit the ssh
 tail -f nohup.out									//see outout when you return later
 
+----Check status of light http deamon service---
+sudo service lighttpd status -l
+
+----Disk Information---
+sudo fdisk -l
 
