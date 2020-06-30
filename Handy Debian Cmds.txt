@@ -20,11 +20,20 @@ sudo add-apt-repository 'deb https://mkvtoolnix.download/ubuntu/ eoan main'
 sudo apt-get autoremove
 
 ----get available updates from repository and apply the updates---
-1. sudo apt-get update		//update repositories
-2. sudo apt-get upgrade		//apply updates
+1. sudo apt-get update			//update repositories
+2. sudo apt-get upgrade			//apply updates
 3. sudo apt-get dist-upgrade
-AIO. sudo apt-get update && sudo apt-get -y upgrade && sudo apt-get -y dist-upgrade && sudo apt -y autoremove && sudo apt autoclean 		// all 3 in one
-4.sudo apt update --fix-missing
+AIO. sudo apt-get update && sudo apt-get -y upgrade && sudo apt-get -y dist-upgrade
+4. sudo rpi-update				//use rarely
+5. sudo apt autoremove
+6. sudo apt autoclean
+7. sudo apt update --fix-missing
+
+----Check eeprom version---
+sudo nano /etc/default/rpi-eeprom-update		//values are: critical, beta or stable (preferred).
+
+----Install eeprom update---
+sudo apt install rpi-eeprom
 
 ----install a debian .deb package---
 sudo apt install /path/to/package/name.deb
