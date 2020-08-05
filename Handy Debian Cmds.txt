@@ -190,7 +190,7 @@ sudo cp /sourcepath/fileA.txt destinationpath					//copy fileA to another locati
 :> /path/filename.ext			//the content will go blank and size goes 0.
 
 ----Install Veeam----
-1. dpkg -i ./veeam-release* && apt-get update						//get veeam-release*.deb file from veeam website
+1. sudo dpkg -i ./veeam-release* && apt-get update				//get veeam-release*.deb file from veeam website
 2. sudo apt-get install veeam
 
 ----Configure Veeam backups---
@@ -227,7 +227,13 @@ pivpn qrcode										//show QR code for a client
 pivpn clients										//list any connected clients
 pivpn update										//update pivpn scripts
 pivpn uninstall										//uninstall pivpn
-sudo nano /etc/pivpn/setupVars.conf					//Configure PIVPN settings post install
+sudo nano /etc/pivpn/wireguard/setupVars.conf					//Configure PIVPN settings post install
+
+----Backup and Restore PIVPN---
+pivpn backup										//backup, will create a .tgz file
+1. extract the contents of .tgz somewhere say /temp -> will have /etc and /home folders within /temp.
+2. be in /temp -> run -> sudo cp -r etc/wireguard /etc
+3. Restart the wireguard service -> sudo systemctl restart wg-quick@wg0
 
 ----Copy files from remote linux machine to local---
 In Powershell -> pscp.exe mj@192.168.0.8:/home/mj/configs/* 'C:\Users\Mj\Dropbox\Configurations\WireGuard_Profiles'
@@ -242,4 +248,21 @@ sudo service lighttpd status -l
 
 ----Disk Information---
 sudo fdisk -l
+fdisk /dev/sdX							//go to focus mode where X is disk label, to focus on certain disk
+in focus mode: p						//show partition info on focused disk
+in focus mode: d						//delete partition
+in focus mode: w						//commit changes when happy
 
+----install qBittorrent---
+apt-get install qbittorrent
+
+----install ssh server---
+sudo apt-get install openssh-server
+sudo systemctl enable ssh
+systemctl start ssh
+
+----ProxMox disable laptop lid---
+sudo nano /etc/systemd/logind.conf						//edit this file
+HandleLidSwitch=ignore					
+HandleLidSwitchDocked=ignore
+sudo systemctl restart systemd-logind.service			//restart logind service
